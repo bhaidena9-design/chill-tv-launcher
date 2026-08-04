@@ -9,10 +9,19 @@
 | Package | What it is |
 |---|---|
 | com.google.android.tvrecommendations | Feeds ads + "recommendations" rows to the launcher |
-| com.google.android.leanbacklauncher.partnercustomizer | Partner/sponsored app row injection |
 | tv.anoki.acr.controller | **ACR — tracks what you watch and phones home** |
 | com.google.android.feedback | Google feedback/telemetry uploader |
 | android.autoinstalls.config.homwee | Auto-installs OEM bloat after setup/reset |
+
+> ⚠️ **`com.google.android.leanbacklauncher.partnercustomizer` looks like it
+> belongs in this table — it does not.** It injects partner/sponsored rows, but
+> it also owns the `tvlauncher.widget` ContentProvider that MediaTek's
+> **persistent** `com.mediatek.tv.service` calls on every network change.
+> Removing it puts that service into a permanent ~6-second crash loop and makes
+> the TV appear to restart at random. See
+> [`KNOWN-ISSUES.md`](../KNOWN-ISSUES.md#1-tv-appears-to-restart-on-its-own--commediatektvservice-crash-loop).
+> Harmless to leave installed: its rows only ever reach the stock launcher,
+> which stays disabled.
 
 ## REMOVE — OEM (Changhong/Homwee) bloat
 

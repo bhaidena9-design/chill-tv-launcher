@@ -44,8 +44,10 @@ back to stock behavior. That's the whole reason this design was chosen.
 
 From the audit of this TV (see [`tv-audit/audit.md`](tv-audit/audit.md)):
 
-- `com.google.android.tvrecommendations` + partner customizer — **the ads and
-  "sponsored" rows** on the stock home screen.
+- `com.google.android.tvrecommendations` — **the ads and "sponsored" rows** on
+  the stock home screen. (Its sibling, the *partner customizer*, is deliberately
+  left installed — removing it crash-loops a MediaTek system service. See
+  [`KNOWN-ISSUES.md`](KNOWN-ISSUES.md).)
 - `tv.anoki.acr.controller` — **ACR: watches what's on your screen and phones
   home.** This alone is worth the exercise.
 - A dozen OEM apps (store, screen-share ×2, file explorer, help, "AI"
@@ -54,9 +56,10 @@ From the audit of this TV (see [`tv-audit/audit.md`](tv-audit/audit.md)):
 ## What's in the repo
 
 ```
-tv-audit/    The audit: every package classified REMOVE / KEEP / NEVER TOUCH
-debloat/     debloat.sh (safe to re-run anytime) + restore.sh (full undo)
-launcher/    "Chill" — the launcher, Kotlin + Jetpack Compose, minSdk 26
+tv-audit/        The audit: every package classified REMOVE / KEEP / NEVER TOUCH
+debloat/         debloat.sh (safe to re-run anytime) + restore.sh (full undo)
+launcher/        "Chill" — the launcher, Kotlin + Jetpack Compose, minSdk 26
+KNOWN-ISSUES.md  Bugs hit on real hardware, their diagnosis and fixes
 screenshots/
 ```
 
@@ -204,6 +207,15 @@ adb uninstall com.tarun.pontlauncher
   [`LauncherScreen.kt`](launcher/app/src/main/java/com/tarun/pontlauncher/LauncherScreen.kt).
 - USB card's target player: `openUsb()` in
   [`MainActivity.kt`](launcher/app/src/main/java/com/tarun/pontlauncher/MainActivity.kt).
+
+## Something broke?
+
+[`KNOWN-ISSUES.md`](KNOWN-ISSUES.md) documents the bugs actually hit on this
+hardware — a random-restart bug caused by an earlier version of the debloat
+list, a clock that stops auto-updating, cache creep — each with the diagnosis
+that found it and the exact commands that fixed it. It also collects the
+platform quirks worth knowing before you start debugging (why load average
+reads 100+ and why that's fine, where the real reboot history lives).
 
 ## Disclaimer
 

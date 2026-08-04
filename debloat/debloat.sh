@@ -15,7 +15,11 @@ fi
 REMOVE=(
   # Ads / tracking / recommendations
   com.google.android.tvrecommendations
-  com.google.android.leanbacklauncher.partnercustomizer
+  # NOTE: do NOT remove com.google.android.leanbacklauncher.partnercustomizer.
+  # It owns the ContentProvider authority "tvlauncher.widget". The persistent
+  # system service com.mediatek.tv.service calls notifyChange() on that authority
+  # every time the network comes up; without the provider it dies with a
+  # SecurityException and is respawned every ~6s, forever.
   tv.anoki.acr.controller
   com.google.android.feedback
   android.autoinstalls.config.homwee
