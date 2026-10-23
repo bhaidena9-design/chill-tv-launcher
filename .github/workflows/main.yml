@@ -9,11 +9,13 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Build
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Build APK
         run: |
           cd launcher
           chmod +x gradlew
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease --no-daemon
       - uses: actions/upload-artifact@v4
         with:
           name: apk
