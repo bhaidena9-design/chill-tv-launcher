@@ -91,6 +91,7 @@ fun LauncherScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .onPreviewKeyEvent { if(it.nativeKeyCode==82||it.nativeKeyCode==172||it.nativeKeyCode==168){ menuFor = homeApps.firstOrNull(); true } else false }
             .background(Brush.verticalGradient(listOf(BgTop, BgBottom)))
     ) {
         Crossfade(targetState = showAllApps, animationSpec = tween(250), label = "screen") { all ->
