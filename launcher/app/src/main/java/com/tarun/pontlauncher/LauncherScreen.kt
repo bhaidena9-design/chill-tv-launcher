@@ -88,11 +88,19 @@ fun LauncherScreen(
     var movingPkg by remember { mutableStateOf<String?>(null) }
     val homeApps = favorites.mapNotNull { pkg -> apps.find { it.packageName == pkg } }
 
-    Box(
-                    modifier = Modifier
+            Box(
+            modifier = Modifier
                 .fillMaxSize()
-                .onPreviewKeyEvent { if(it.nativeKeyEvent.keyCode==82||it.nativeKeyEvent.keyCode==172||it.nativeKeyEvent.keyCode==112) { showAllApps = true; true } else false }
+                .onPreviewKeyEvent {
+                    if (it.nativeKeyEvent.keyCode == 82 || it.nativeKeyEvent.keyCode == 172 || it.nativeKeyEvent.keyCode == 112) {
+                        showAllApps = true
+                        true
+                    } else {
+                        false
+                    }
+                }
                 .background(Brush.verticalGradient(listOf(BgTop, BgBottom)))
+        ) {
         Crossfade(targetState = showAllApps, animationSpec = tween(250), label = "screen") { all ->
             if (all) {
                 AllAppsScreen(
@@ -128,7 +136,7 @@ fun LauncherScreen(
             } else null,
             onToggleFavorite = { onToggleFavorite(app); menuFor = null },
             onAppInfo = { onAppInfo(app); menuFor = null },
-            onUninstall = { onUninstall(app); menuFor = null },
+                        onUninstall = { onUninstall(app); menuFor = null },
         )
     }
 }
